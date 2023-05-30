@@ -8,13 +8,13 @@ const session = require("express-session");
 const helmet = require("helmet");
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/CRUD';
 
-require("dotenv").config();
+
 
 const weatherRouter = require("./routes/weather");
 
 const app = express();
 
-const secret = process.env.Secret || "my-secret-key"
+const secret = process.env.SECRET || "my-secret-key";
 
 app.use(
   session({
@@ -23,6 +23,7 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 
 app.use(require("connect-flash")());
 
