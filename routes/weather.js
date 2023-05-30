@@ -4,6 +4,7 @@ const CityModel = require("../models/city");
 const getWeather = require("../utils/weather");
 const { body, validationResult } = require("express-validator");
 
+
 const router = express.Router();
 
 const apiKey = process.env.API_KEY;

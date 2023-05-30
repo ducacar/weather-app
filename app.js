@@ -5,25 +5,15 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const helmet = require("helmet");
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/CRUD';
-
-
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/CRUD";
 
 const weatherRouter = require("./routes/weather");
 
 const app = express();
 
 const secret = process.env.SECRET || "my-secret-key";
-
-app.use(
-  session({
-    secret,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
 
 app.use(require("connect-flash")());
 
@@ -72,11 +62,30 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
+const store = new MongoDBStore({
+  uri: dbUrl,
+  collection: "weather-app",
+  expires: 1000 * 60 * 60 * 24,
+});
+
+store.on("error", (error) => {
+  console.error("MongoDBStore error:", error);
+});
+
+app.use(
+  session({
+    secret,
+    resave: false,
+    saveUninitialized: true,
+    store: store,
+  })
+);
+
 app.set("view engine", "ejs");
 
 app.use("/", weatherRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Serving on port ${port}`)
-})
+  console.log(`Serving on port ${port}`);
+});
