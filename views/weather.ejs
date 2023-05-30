@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Weather App</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/weather.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>Weather App</h1>
+      <form method="POST">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            name="city_name"
+            placeholder="Enter city name"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-secondary">Search</button>
+      </form>
+
+      <% if (typeof messages !== 'undefined' && messages.length > 0) { %>
+      <div
+        id="error-message"
+        class="alert alert-danger mt-3 alert-dismissible fade show"
+        role="alert"
+      >
+        <%= messages[0] %>
+        <button type="button" class="close" id="errorButton" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <% } %> <% if (typeof weather_data !== 'undefined' && weather_data.length
+      > 0) { %>
+      <div class="card mt-5" id="five-day-forecast">
+        <div class="card-body">
+          <h2 class="card-title">
+            <%= weather_data[0].city %> Today's Forecast
+          </h2>
+          <div class="row justify-content-center">
+            <div class="col-md-2">
+              <p><%= weather_data[0].date.toDateString() %></p>
+              <img
+                src="https://openweathermap.org/img/w/<%= weather_data[0].icon %>.png"
+              />
+              <p><%= weather_data[0].description %></p>
+              <p><%= weather_data[0].temperature %> &deg;C</p>
+              <button class="btn btn-primary" id="myButton">
+                See 4-Day Forecast
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-5 d-none" id="four-day-forecast">
+        <div class="card-body">
+          <h2 class="card-title"><%= weather_data[0].city %> 4-Day Forecast</h2>
+          <div class="row justify-content-center">
+            <% for (let i = 1; i < weather_data.length; i++) { %>
+            <div class="col-md-2">
+              <p><%= weather_data[i].date.toDateString() %></p>
+              <img
+                src="https://openweathermap.org/img/w/<%= weather_data[i].icon %>.png"
+              />
+              <p><%= weather_data[i].description %></p>
+              <p>Min: <%= weather_data[i].minTemp %> &deg;C</p>
+              <p>Max: <%= weather_data[i].maxTemp %> &deg;C</p>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+
+    <script src="javascripts/errorButton.js"></script>
+    <script src="javascripts/button.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

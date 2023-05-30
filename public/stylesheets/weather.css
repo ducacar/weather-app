@@ -1,0 +1,30 @@
+body {
+  height: 160vh;
+  background: linear-gradient(to bottom right, #5058f3, #8f94fb);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 25px;
+}
+
+.card-body {
+  text-transform: capitalize;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:visited {
+  background: linear-gradient(to bottom right, #5058f3, #8f94fb) !important;
+  transition: all 0.7s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to bottom right, #8f94fb, #5058f3) !important;
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
