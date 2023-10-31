@@ -29,8 +29,3 @@ h1 {
   box-shadow: none !important;
 }
 
-@media (max-width: 768px) {
-  .form-group {
-    justify-content: center;
-  }
-}
